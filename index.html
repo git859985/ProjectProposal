@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 運動數據收集分析計劃 - 專案推進簡報 (大字投影版)</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #0b1120;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: #0f172a;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .slide-deck {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      max-width: 1920px;
+      max-height: 1080px;
+      aspect-ratio: 16 / 9;
+      background: #ffffff;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+    }
+    .slide {
+      display: none;
+      width: 100%;
+      height: 100%;
+      padding: 48px 64px 44px;
+      flex-direction: column;
+      justify-content: space-between;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+    }
+    .slide.active {
+      display: flex;
+      opacity: 1;
+    }
+    .slide-dark {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #f8fafc;
+    }
+    .slide-light {
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid #cbd5e1;
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+      flex-shrink: 0;
+    }
+    .slide-dark .slide-header {
+      border-bottom: 3px solid #334155;
+    }
+    .header-badge {
+      font-size: 18px;
+      font-weight: 800;
+      color: #0284c7;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .slide-title {
+      font-size: 34px;
+      font-weight: 900;
+      color: #0f172a;
+      margin-top: 4px;
+    }
+    .slide-dark .slide-title {
+      color: #f8fafc;
+    }
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 2px solid #cbd5e1;
+      padding-top: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #64748b;
+      flex-shrink: 0;
+    }
+    .slide-dark .slide-footer {
+      border-top: 2px solid #334155;
+      color: #94a3b8;
+    }
+
+    /* 圖片外框自適應容器 */
+    .img-card {
+      background: #ffffff;
+      border: 2px solid #94a3b8;
+      border-radius: 12px;
+      padding: 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06);
+      overflow: hidden;
+      height: 100%;
+      min-height: 0;
+    }
+    .img-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 6px;
+      min-height: 0;
+    }
+    .img-label {
+      font-size: 16px;
+      font-weight: 800;
+      color: #1e293b;
+      margin-top: 4px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    /* 控制按鈕：正下方置中，不遮蔽頁碼 */
+    .nav-controls {
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 16px;
+      z-index: 999;
+    }
+    .nav-btn {
+      background: rgba(15, 23, 42, 0.9);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      padding: 8px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 800;
+      backdrop-filter: blur(6px);
+      transition: all 0.2s;
+    }
+    .nav-btn:hover {
+      background: #0284c7;
+      border-color: #0284c7;
+    }
+    .nav-btn:active {
+      transform: scale(0.95);
+      background: #0369a1;
+    }
+  </style>
+</head>
+<body>
+
+<div class="slide-deck">
+
+<!-- Slide 1: 封面 (垂直位置適中、大字體維持原樣、圖片高度放大 50%) -->
+  <div class="slide slide-dark active" style="padding: 44px 64px 40px;">
+    
+    <!-- 頂部標籤 -->
+    <div class="slide-header" style="margin-bottom: 12px; padding-bottom: 10px;">
+      <span class="header-badge" style="color: #38bdf8;">Project Proposal</span>
+    </div>
+
+    <!-- 主體內容區（下移 50%，適度居中展開） -->
+    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; min-height: 0;">
+      
+      <!-- 標題徽章 -->
+      <div style="display: inline-block; background: rgba(14, 165, 233, 0.2); border: 2px solid #0284c7; color: #38bdf8; font-size: 20px; font-weight: 800; padding: 6px 20px; border-radius: 30px; width: fit-content; margin-bottom: 16px;">
+        第一階段成果驗收 ＆ 第二階段推動計畫
+      </div>
+
+      <!-- 主標題 (維持 56px 大字) -->
+      <h1 style="font-size: 56px; font-weight: 900; line-height: 1.2; margin-bottom: 12px; color: #ffffff;">
+        AI 運動數據收集分析計劃
+      </h1>
+
+      <!-- 副標題 (維持 28px 大字) -->
+      <p style="font-size: 28px; color: #cbd5e1; margin-bottom: 24px; font-weight: 600;">
+        第一階段成果展示與第二階段機電感測升級提案
+      </p>
+
+      <!-- 三大階段橫向卡片區 (字體維持原樣，圖片高度增加 50% 至 210px) -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; min-height: 0;">
+        
+        <!-- 第一階段卡片 -->
+        <div style="background: rgba(255, 255, 255, 0.06); border: 2px solid #38bdf8; padding: 18px 22px; border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <span style="font-size: 18px; color: #38bdf8; font-weight: 800;">第一階段（已完成）</span>
+            <p style="font-size: 22px; color: #ffffff; margin-top: 6px; font-weight: 700;">專用 APP ＋ 本地端資料庫平台建立</p>
+          </div>
+          <!-- 圖片容器加大 50% (140px -> 210px) -->
+          <div style="height: 210px; display: flex; align-items: center; justify-content: center; margin-top: 12px; background: rgba(15, 23, 42, 0.5); border-radius: 10px; padding: 10px;">
+            <img src="phase1_icon.png" alt="第一階段示意圖" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+          </div>
+        </div>
+
+        <!-- 第二階段卡片 -->
+        <div style="background: rgba(255, 255, 255, 0.06); border: 2px solid #f59e0b; padding: 18px 22px; border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <span style="font-size: 18px; color: #fbbf24; font-weight: 800;">第二階段（本案目標）</span>
+            <p style="font-size: 22px; color: #ffffff; margin-top: 6px; font-weight: 700;">導入更多機台 ＆ 擴展資料的深度與廣度</p>
+          </div>
+          <!-- 圖片容器加大 50% (140px -> 210px) -->
+          <div style="height: 210px; display: flex; align-items: center; justify-content: center; margin-top: 12px; background: rgba(15, 23, 42, 0.5); border-radius: 10px; padding: 10px;">
+            <img src="phase2_icon.png" alt="第二階段示意圖" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+          </div>
+        </div>
+
+        <!-- 第三階段卡片 -->
+        <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid #475569; padding: 18px 22px; border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <span style="font-size: 18px; color: #94a3b8; font-weight: 700;">第三階段（未來目標）</span>
+            <p style="font-size: 22px; color: #cbd5e1; margin-top: 6px; font-weight: 600;">AI 大數據建模與個人化處方</p>
+          </div>
+          <!-- 圖片容器加大 50% (140px -> 210px) -->
+          <div style="height: 210px; display: flex; align-items: center; justify-content: center; margin-top: 12px; background: rgba(15, 23, 42, 0.4); border-radius: 10px; padding: 10px;">
+            <img src="phase3_icon.png" alt="第三階段示意圖" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- 頁尾 -->
+    <div class="slide-footer">
+      <span>Steelflex 運動數據收集分析專案</span>
+      <span>01</span>
+    </div>
+  </div>
+
+<!-- Slide 2: 運動數據收集架構 (大字版 / 左40%等高卡片 : 右60%) -->
+  <div class="slide slide-light">
+    <div class="slide-header" style="margin-bottom: 14px; padding-bottom: 10px;">
+      <div>
+        <span class="header-badge">Architecture</span>
+        <h2 class="slide-title">運動數據收集架構</h2>
+      </div>
+      <div style="background: #e0f2fe; color: #0369a1; padding: 6px 18px; border-radius: 20px; font-size: 24px; font-weight: 800;">
+        核心架構藍圖
+      </div>
+    </div>
+
+    <!-- 比例為 4fr 6fr (40% : 60%)，兩側拉伸對齊 -->
+    <div style="display: grid; grid-template-columns: 4fr 6fr; gap: 28px; flex: 1; align-items: stretch; min-height: 0;">
+      
+      <!-- 左側 40%：3 張卡片垂直均勻等高排列 (repeat(3, 1fr)) -->
+      <div style="display: grid; grid-template-rows: repeat(3, 1fr); gap: 16px; min-height: 0;">
+        
+        <!-- 卡片 1 -->
+        <div style="background: #ffffff; border: 2px solid #cbd5e1; border-left: 8px solid #059669; border-radius: 12px; padding: 18px 20px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+          <h4 style="font-size: 32px; font-weight: 900; color: #059669; margin-bottom: 6px;">1. 設備感知端（Steelflex 機台硬體）</h4>
+          <p style="font-size: 27px; color: #334155; line-height: 1.55; font-weight: 600; margin: 0;">
+            採集速度拉力（編碼器、荷重元與心率模組）。
+          </p>
+        </div>
+
+        <!-- 卡片 2 -->
+        <div style="background: #ffffff; border: 2px solid #cbd5e1; border-left: 8px solid #d97706; border-radius: 12px; padding: 18px 20px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+          <h4 style="font-size: 32px; font-weight: 900; color: #d97706; margin-bottom: 6px;">2. 人機介面（衝刺專用 APP）</h4>
+          <p style="font-size: 27px; color: #334155; line-height: 1.55; font-weight: 600; margin: 0;">
+            BLE 傳輸、即時曲線繪製與自動上傳。
+          </p>
+        </div>
+
+        <!-- 卡片 3 -->
+        <div style="background: #ffffff; border: 2px solid #cbd5e1; border-left: 8px solid #0284c7; border-radius: 12px; padding: 18px 20px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+          <h4 style="font-size: 32px; font-weight: 900; color: #0284c7; margin-bottom: 6px;">3. 數據中心（MySQL 本地伺服器）</h4>
+          <p style="font-size: 27px; color: #334155; line-height: 1.55; font-weight: 600; margin: 0;">
+            存儲設備資訊、運動數據，累積為 AI 專屬訓練資料庫。
+          </p>
+        </div>
+
+      </div>
+
+      <!-- 右側 60%：架構圖寬幅最大化展開 -->
+      <div class="img-card" style="padding: 10px; display: flex; align-items: center; justify-content: center;">
+        <img src="photo1.png" alt="運動數據收集架構圖" style="width: 100%; height: 100%; object-fit: contain;">
+      </div>
+
+    </div>
+
+    <div class="slide-footer" style="padding-top: 8px;">
+      <span>Steelflex 運動數據收集分析專案</span>
+      <span>02</span>
+    </div>
+  </div>
+
+  <!-- Slide 3: 第一階段成果(一) 終端與即時做功 (大字結論) -->
+  <div class="slide slide-light">
+    <div class="slide-header">
+      <div>
+        <span class="header-badge">Phase 1 Delivery</span>
+        <h2 class="slide-title">「爆發力衝刺訓練機」專用APP</h2>
+      </div>
+
+    </div>
+    <div style="display: grid; grid-template-columns: 30fr 70fr; gap: 20px; flex: 1; min-height: 0;">
+      <div class="img-card">
+        <img src="FPR_Result.png" alt="Steelflex BLE 連線實測">
+        <div class="img-label">【傳統儀表】僅能呈現最終運動結果</div>
+      </div>
+      <div class="img-card">
+        <img src="photo6_chart.png" alt="單次衝刺波形圖">
+        <div class="img-label">【APP畫面】即時採集衝刺峰值（Level 18 / 27.7 km/h）</div>
+      </div>
+    </div>
+    <div style="background: #ffffff; border-left: 6px solid #0284c7; padding: 12px 22px; border-radius: 8px; margin-top: 12px; font-size: 20px; font-weight: 800; color: #0f172a; flex-shrink: 0;">
+      ✔ <strong>核心成果</strong>：APP 具備毫秒級繪圖能力，成功捕捉選手每一次衝刺的峰值曲線！
+    </div>
+    <div class="slide-footer">
+      <span>Steelflex 運動數據收集分析專案</span>
+      <span>03 </span>
+    </div>
+  </div>
+
+  <!-- Slide 4: 第一階段成果(二) 多場次時序分析 (大字結論) -->
+  <div class="slide slide-light">
+    <div class="slide-header">
+      <div>
+        <span class="header-badge">Phase 1 Delivery</span>
+        <h2 class="slide-title">數據分析端突破：多次衝刺波形動態比對</h2>
+      </div>
+
+    </div>
+    <div style="display: grid; grid-template-columns: 30fr 70fr; gap: 20px; flex: 1; min-height: 0;">
+      <div class="img-card">
+        <img src="photo8_history.png" alt="活動紀錄多筆列表">
+        <div class="img-label">【數據留存】多場次訓練數據紀錄清單</div>
+      </div>
+      <div class="img-card">
+        <img src="photo9_compare.png" alt="多筆運動時序比較圖">
+        <div class="img-label">【時序重構】多線重疊比對（多場次速度波形完整還原）</div>
+      </div>
+    </div>
+    <div style="background: #ffffff; border-left: 6px solid #059669; padding: 12px 22px; border-radius: 8px; margin-top: 12px; font-size: 20px; font-weight: 800; color: #0f172a; flex-shrink: 0;">
+      ✔ <strong>核心成果</strong>：突破單一數據限制，多線波形重疊比對，找出最佳化關鍵！
+    </div>
+    <div class="slide-footer">
+      <span>Steelflex 運動數據收集分析專案</span>
+      <span>04 </span>
+    </div>
+  </div>
+
+  <!-- Slide 5: 第一階段成果(三) 本地 MySQL 落地 (大字結論) -->
+  <div class="slide slide-light">
+    <div class="slide-header">
+      <div>
+        <span class="header-badge">Phase 1 Delivery</span>
+        <h2 class="slide-title">本地端資料庫架設</h2>
+      </div>
+
+    </div>
+    <div style="display: grid; grid-template-columns: 69fr 31fr; gap: 20px; flex: 1; min-height: 0;">
+      <div class="img-card" style="padding: 6px;">
+        <img src="photo4.png" alt="workout_sessions 訓練紀錄資料表" style="object-position: top center;">
+        <div class="img-label">APP上傳資料庫數據(ROW DATA)</div>
+      </div>
+      <div class="img-card" style="padding: 6px;">
+        <img src="photo5.png" alt="單筆運動數據詳細表單">
+        <div class="img-label">【單筆封裝】Session 48：等級6 / 30m / 時速27km/h</div>
+      </div>
+    </div>
+    <div style="background: #ffffff; border-left: 6px solid #0284c7; padding: 12px 22px; border-radius: 8px; margin-top: 12px; font-size: 20px; font-weight: 800; color: #0f172a; flex-shrink: 0;">
+      ✔ <strong>核心成果</strong>：利用公司現有主機架設資料庫，以微小封包（&lt;1KB）實現連續時序存儲，零雲端租金！
+    </div>
+    <div class="slide-footer">
+      <span>Steelflex 運動數據收集分析專案</span>
+      <span>05 </span>
+    </div>
+  </div>
+
+<!-- Slide 6: 痛點與核心觀念（已修復垂直大片空白問題） -->
+  <div class="slide slide-light">
+    <div class="slide-header" style="margin-bottom: 14px; padding-bottom: 10px;">
+      <div>
+        <span class="header-badge" style="color: #dc2626;">Strategic Bottleneck</span>
+        <h2 class="slide-title">AI 落地真相：唯有「足量資料」與「多維感知」才能突破門檻</h2>
+      </div>
+      <div style="background: #fee2e2; color: #991b1b; padding: 6px 18px; border-radius: 20px; font-size: 24px; font-weight: 800;">
+        拒絕 GIGO（垃圾進，垃圾出）
+      </div>
+    </div>
+
+    <!-- 垂直分成上下兩大等高區塊 (1fr 1fr)，徹底消除中間多餘空白 -->
+    <div style="display: grid; grid-template-rows: 1fr 1fr; gap: 18px; flex: 1; min-height: 0;">
+      
+      <!-- 上半部：兩大觀念卡片 (自動拉伸填滿高度) -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; min-height: 0;">
+        
+        <!-- 觀念一 -->
+        <div style="background: #ffffff; border: 2px solid #cbd5e1; border-left: 10px solid #0284c7; border-radius: 12px; padding: 20px 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: center;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+            <span style="font-size: 24px; font-weight: 800; color: #0284c7; text-transform: uppercase;">觀念一：資料累積量</span>
+            <span style="background: #e0f2fe; color: #0369a1; font-size: 21px; font-weight: 800; padding: 3px 10px; border-radius: 6px;">統計顯著性</span>
+          </div>
+          <h3 style="font-size: 34px; font-weight: 900; color: #0f172a; margin-bottom: 8px;">AI 不是無中生有，必須跨越「有效資料量門檻」</h3>
+          <p style="font-size: 30px; color: #334155; line-height: 1.6; font-weight: 600; margin: 0;">
+            少數幾十筆零散紀錄無法訓練出具備泛化能力的 AI。在演算法發揮商業價值前，<strong>首要任務是累積數千至數萬筆真實訓練時序</strong>，形成統計樣本母體。
+          </p>
+        </div>
+
+        <!-- 觀念二 -->
+        <div style="background: #ffffff; border: 2px solid #cbd5e1; border-left: 10px solid #ef4444; border-radius: 12px; padding: 20px 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: center;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+            <span style="font-size: 24px; font-weight: 800; color: #dc2626; text-transform: uppercase;">觀念二：資料豐富度</span>
+            <span style="background: #fee2e2; color: #991b1b; font-size: 21px; font-weight: 800; padding: 3px 10px; border-radius: 6px;">維度決定上限</span>
+          </div>
+          <h3 style="font-size: 34px; font-weight: 900; color: #0f172a; margin-bottom: 8px;">光有數量不夠，維度缺失只會導致「垃圾進、垃圾出」</h3>
+          <p style="font-size: 30px; color: #334155; line-height: 1.6; font-weight: 600; margin: 0;">
+            若只有速度單一維度，AI 無法推論出力學代償與中樞疲勞。缺乏<strong>「拉力、加速度與心率」</strong>等核心特徵，再龐大的數據庫也只是無法消化的雜訊。
+          </p>
+        </div>
+
+      </div>
+
+      <!-- 下半部：跨部門「雙軌推進」行動策略 (自動拉伸填滿高度) -->
+      <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 12px; padding: 20px 24px; display: flex; flex-direction: column; justify-content: space-between; min-height: 0;">
+        <h4 style="font-size: 34px; font-weight: 900; color: #0f172a; margin-bottom: 10px;">
+          🚀 跨越門檻的唯一解方：跨部門「雙軌推進」行動策略
+        </h4>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; flex: 1; min-height: 0;">
+          
+          <!-- 業務與市場端任務 -->
+          <div style="background: #f8fafc; border-left: 6px solid #d97706; padding: 14px 18px; border-radius: 8px; display: flex; flex-direction: column; justify-content: center;">
+            <h5 style="font-size: 30px; font-weight: 800; color: #b45309; margin-bottom: 6px;">
+              【業務與市場端】場域推廣 ＆ 用戶上傳激勵（衝刺數量）
+            </h5>
+            <p style="font-size: 30px; color: #334155; line-height: 1.5; font-weight: 600; margin: 0;">
+              協助機台進入合作場館與體能中心，透過制度與 APP 體驗設計，<strong>大幅激勵使用者持續連線並主動上傳運動紀錄</strong>，快速跨越資料量門檻。
+            </p>
+          </div>
+
+          <!-- 研發與工程端任務 -->
+          <div style="background: #f8fafc; border-left: 6px solid #059669; padding: 14px 18px; border-radius: 8px; display: flex; flex-direction: column; justify-content: center;">
+            <h5 style="font-size: 30px; font-weight: 800; color: #047857; margin-bottom: 6px;">
+              【研發與工程端】機台加裝多維感測器（擴充維度）
+            </h5>
+            <p style="font-size: 30px; color: #334155; line-height: 1.5; font-weight: 600; margin: 0;">
+              加裝<strong>「編碼器、荷重元 (Load Cell) 與 BLE 心率模組」</strong>，把每次採集的特徵維度補齊，確保業務端帶回來的每一筆資料都是具備 AI 價值的黃金資產。
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 底部大字結論橫條 -->
+    <div style="background: #ffffff; border: 2px solid #cbd5e1; border-left: 8px solid #0284c7; border-radius: 8px; padding: 12px 20px; margin-top: 12px; font-size: 27px; color: #0f172a; font-weight: 800; flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.04);">
+      💡 <strong>報告核心訴求：</strong>研發端透過感測器把「資料深度」做出來，業務端協助推廣把「資料廣度」做出來，兩者合流才是 AI 商業變現的起點！
+    </div>
+
+    <div class="slide-footer" style="padding-top: 8px;">
+      <span>Steelflex 運動數據收集分析專案</span>
+      <span>06 </span>
+    </div>
+  </div>
+
+<!-- Slide 7: 第二階段核心目標 (左側 3 大卡片等高配置 50% : 右側 photo11.png 50%) -->
+  <div class="slide slide-light">
+    <div class="slide-header" style="margin-bottom: 14px; padding-bottom: 10px;">
+      <div>
+        <span class="header-badge">Phase 2 Objective</span>
+        <h2 class="slide-title">第二階段核心目標：機台感測升級、產品導入與場域拓展</h2>
+      </div>
+      <div style="background: #e0f2fe; color: #0369a1; padding: 6px 18px; border-radius: 20px; font-size: 24px; font-weight: 800;">
+        建立技術護城河
+      </div>
+    </div>
+
+    <!-- 左右 50% : 50% 網格 -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 28px; flex: 1; min-height: 0; align-items: stretch;">
+      
+      <!-- 左側 50%：3 張卡片均勻等高排列 (repeat(3, 1fr)) -->
+      <div style="display: grid; grid-template-rows: repeat(3, 1fr); gap: 18px; min-height: 0;">
+        
+        <!-- 一、 客戶無痛升級方案 -->
+        <div style="background: #ffffff; border: 2px solid #cbd5e1; border-left: 10px solid #0284c7; border-radius: 14px; padding: 18px 22px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+          <h3 style="font-size: 33px; font-weight: 900; color: #0284c7; margin-bottom: 8px;">一、 客戶升級方案：現有機台直接替換儀表</h3>
+          <p style="font-size: 27px; color: #334155; line-height: 1.6; font-weight: 600; margin: 0;">
+            提供模組化升級套件，<strong>既有機台直接更換新版智慧儀表</strong>，即可無痛連線 APP 進入數位閉環。
+          </p>
+        </div>
+
+        <!-- 二、 現有產品逐步導入感測元件 -->
+        <div style="background: #ffffff; border: 2px solid #cbd5e1; border-left: 10px solid #059669; border-radius: 14px; padding: 18px 22px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+          <h3 style="font-size: 33px; font-weight: 900; color: #059669; margin-bottom: 8px;">二、 產品全面升級：逐步導入多維感測元件</h3>
+          <p style="font-size: 27px; color: #334155; line-height: 1.6; font-weight: 600; margin: 0;">
+            將公司現有運動產品<strong>逐步升級導入感測元件（Load Cell、編碼器等）</strong>，結合 APP 自動上傳數據。
+          </p>
+        </div>
+
+        <!-- 三、 產業結盟與場域數據收集 -->
+        <div style="background: #ffffff; border: 2px solid #cbd5e1; border-left: 10px solid #d97706; border-radius: 14px; padding: 18px 22px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+          <h3 style="font-size: 33px; font-weight: 900; color: #d97706; margin-bottom: 8px;">三、 產業生態結盟：跨界佈建社區與社福場域</h3>
+          <p style="font-size: 27px; color: #334155; line-height: 1.6; font-weight: 600; margin: 0;">
+            推進產業結盟，<strong>提供機台設備給社區活動中心或高齡社福場域</strong>進行建置，擴大並深耕真實數據收集。
+          </p>
+        </div>
+
+      </div>
+
+      <!-- 右側 50%：photo11.png 圖片容器 -->
+      <div class="img-card" style="padding: 10px;">
+        <img src="photo11.png" alt="第二階段機台感測升級配置圖" style="width: 100%; height: 100%; object-fit: contain;">
+      </div>
+
+    </div>
+
+    <div class="slide-footer" style="padding-top: 8px;">
+      <span>Steelflex 運動數據收集分析專案</span>
+      <span>07</span>
+    </div>
+  </div>
+
+  <!-- Slide 8: 第二階段時程規劃 (大字里程碑) -->
+  <div class="slide slide-light">
+    <div class="slide-header">
+      <div>
+        <span class="header-badge">Roadmap</span>
+        <h2 class="slide-title">第二階段推進時程（WBS）與階段交付里程碑</h2>
+      </div>
+      <div style="background: #f1f5f9; color: #475569; padding: 6px 18px; border-radius: 20px; font-size: 16px; font-weight: 800;">
+        里程碑管理
+      </div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; flex: 1; min-height: 0;">
+      <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 14px; padding: 28px; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <span style="font-size: 32px; font-weight: 900; color: #0284c7;">Q1</span>
+          <h4 style="font-size: 24px; font-weight: 900; color: #0f172a; margin: 12px 0 16px;">感測選型 ＆ 協定擴充</h4>
+          <ul style="font-size: 19px; color: #334155; line-height: 1.8; padding-left: 24px; font-weight: 600;">
+            <li>完成編碼器與 Load Cell 選型採購</li>
+            <li>制定第二代 BLE 數據通訊格式</li>
+            <li>擴充本地資料庫力學與心率欄位</li>
+          </ul>
+        </div>
+        <div style="background: #f8fafc; padding: 12px; border-radius: 8px; font-size: 17px; color: #0f172a; font-weight: 800;">
+          📦 交付：選型報告與實驗板
+        </div>
+      </div>
+
+      <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 14px; padding: 28px; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <span style="font-size: 32px; font-weight: 900; color: #0284c7;">Q2</span>
+          <h4 style="font-size: 24px; font-weight: 900; color: #0f172a; margin: 12px 0 16px;">機電整合 ＆ 聯調測試</h4>
+          <ul style="font-size: 19px; color: #334155; line-height: 1.8; padding-left: 24px; font-weight: 600;">
+            <li>感測元件於原型機安裝與走線防護</li>
+            <li>MCU 訊號濾波與瞬時功率演算法</li>
+            <li>APP 升級：即時心率與發力平衡圖</li>
+          </ul>
+        </div>
+        <div style="background: #f8fafc; padding: 12px; border-radius: 8px; font-size: 17px; color: #0f172a; font-weight: 800;">
+          📦 交付：感測整合衝刺原型機 1 式
+        </div>
+      </div>
+
+      <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 14px; padding: 28px; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <span style="font-size: 32px; font-weight: 900; color: #0284c7;">Q3</span>
+          <h4 style="font-size: 24px; font-weight: 900; color: #0f172a; margin: 12px 0 16px;">高維資料集累積與驗證</h4>
+          <ul style="font-size: 19px; color: #334155; line-height: 1.8; padding-left: 24px; font-weight: 600;">
+            <li>廠內實測，累積 1,000+ 筆高維運動資料</li>
+            <li>校驗時序完整性，確保數據零丟失</li>
+            <li>對接第三階段 AI 模型訓練需求</li>
+          </ul>
+        </div>
+        <div style="background: #f8fafc; padding: 12px; border-radius: 8px; font-size: 17px; color: #0f172a; font-weight: 800;">
+          📦 交付：高維資料庫與測試報告
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>Steelflex 運動數據收集分析專案</span>
+      <span>08 </span>
+    </div>
+  </div>
+
+  <!-- Slide 9: 決策立項請求 (大字強訴求) -->
+  <div class="slide slide-dark">
+    <div class="slide-header">
+      <span class="header-badge" style="color: #38bdf8;">Call to Action</span>
+      <span style="font-size: 20px; color: #cbd5e1; font-weight: 700;">決策申請</span>
+    </div>
+    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+      <h2 style="font-size: 48px; font-weight: 900; color: #ffffff; margin-bottom: 24px; line-height: 1.25;">
+        立項請求：核可第二階段硬體感測元件研發案
+      </h2>
+      <p style="font-size: 24px; color: #cbd5e1; line-height: 1.6; margin-bottom: 44px; font-weight: 600;">
+        第一階段已證明我們能以極低成本打通數據鏈路；誠摯請求主管支持第二階段推進，建立機台核心技術壁壘。
+      </p>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 36px;">
+        <div style="background: rgba(255, 255, 255, 0.06); border-left: 8px solid #38bdf8; padding: 30px; border-radius: 12px;">
+          <h4 style="font-size: 26px; font-weight: 900; color: #38bdf8; margin-bottom: 14px;">申請資源與預算</h4>
+          <p style="font-size: 20px; color: #f1f5f9; line-height: 1.8; font-weight: 600;">
+            • 感測元件打樣與採購費用（編碼器、Load Cell、BLE 心率接收模組）<br>
+            • 機構微調與打樣工時支援
+          </p>
+        </div>
+        <div style="background: rgba(255, 255, 255, 0.06); border-left: 8px solid #4ade80; padding: 30px; border-radius: 12px;">
+          <h4 style="font-size: 26px; font-weight: 900; color: #4ade80; margin-bottom: 14px;">預期核心回報</h4>
+          <p style="font-size: 20px; color: #f1f5f9; line-height: 1.8; font-weight: 600;">
+            • 掌握關鍵機電感知整合技術，拉開競品差距<br>
+            • 建立高維度運動資料集，奠定 AI 商業價值
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>Steelflex 運動數據收集分析專案</span>
+      <span>09 </span>
+    </div>
+  </div>
+
+  <!-- Slide 10: Q&A 備援（大字版） -->
+  <div class="slide slide-light">
+    <div class="slide-header">
+      <div>
+        <span class="header-badge">Appendix / Q&A 備援</span>
+        <h2 class="slide-title">系統負載推估：本地承載極限與雲端遷移標準</h2>
+      </div>
+      <div style="background: #e0f2fe; color: #0369a1; padding: 6px 18px; border-radius: 20px; font-size: 16px; font-weight: 800;">
+        單筆數據 &lt; 100KB 評估模型
+      </div>
+    </div>
+    <div style="background: #ffffff; border-left: 6px solid #0284c7; padding: 14px 22px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); margin-bottom: 18px; flex-shrink: 0;">
+      <p style="margin: 0; font-size: 20px; font-weight: 800; color: #0f172a;">
+        核心結論：<span style="color: #0284c7;">儲存空間可存 800 萬筆紀錄</span>，瓶頸在瞬時併發。第二階段續用本地伺服器無額外成本，待<span style="color: #b91c1c;">規模化商轉</span>或<span style="color: #b91c1c;">AI 算力需求出現</span>再行遷移。
+      </p>
+    </div>
+    <div style="display: grid; grid-template-columns: 4fr 6fr; gap: 26px; flex: 1; align-items: stretch; min-height: 0;">
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 12px; padding: 22px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span style="font-weight: 900; color: #334155; font-size: 20px;">硬碟儲存空間</span>
+            <span style="background: #dcfce7; color: #15803d; font-size: 14px; font-weight: 900; padding: 3px 10px; border-radius: 10px;">無瓶頸 / 充足</span>
+          </div>
+          <div style="font-size: 38px; font-weight: 900; color: #0f172a; margin-bottom: 4px;">8,000,000+ <span style="font-size: 18px; font-weight: 700; color: #64748b;">筆紀錄</span></div>
+          <p style="font-size: 16px; color: #475569; margin: 0; line-height: 1.6; font-weight: 600;">
+            • 1 TB SSD 實用 800 GB 計算（每萬筆約 1 GB）<br>
+            • 每日 1,000 人次訓練，足以存儲 <strong>20 年以上</strong>
+          </p>
+        </div>
+        <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 12px; padding: 22px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span style="font-weight: 900; color: #334155; font-size: 20px;">瞬時併發寫入極限</span>
+            <span style="background: #fef3c7; color: #b45309; font-size: 14px; font-weight: 900; padding: 3px 10px; border-radius: 10px;">系統關鍵瓶頸</span>
+          </div>
+          <div style="font-size: 38px; font-weight: 900; color: #0284c7; margin-bottom: 4px;">150 ~ 200 <span style="font-size: 18px; font-weight: 700; color: #64748b;">台設備同秒結算</span></div>
+          <p style="font-size: 16px; color: #475569; margin: 0; line-height: 1.6; font-weight: 600;">
+            • 現有主機每秒可處理 100～300 次寫入<br>
+            • 足以支撐 <strong>50～100 家場館</strong> 同時運作（數萬名會員）
+          </p>
+        </div>
+      </div>
+      <div style="background: #ffffff; border: 2px solid #cbd5e1; border-radius: 12px; padding: 22px; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <h3 style="font-size: 20px; font-weight: 900; color: #1e293b; margin-bottom: 12px;">本地維運 vs. 租用雲端之「切換門檻」</h3>
+          <ul style="font-size: 17px; color: #334155; line-height: 1.8; padding-left: 24px; font-weight: 600;">
+            <li><strong>設備規模</strong>：同時在線機台 &gt; 100 台時啟動遷移</li>
+            <li><strong>網路頻寬</strong>：外部上傳佔滿公司 &gt; 80% 上行頻寬時啟動遷移</li>
+            <li><strong>算力需求</strong>：進入第三階段需 GPU 進行 AI 大模型訓練與推論時遷移</li>
+            <li><strong>商用可用性</strong>：正式全面商轉需要 99.9% 高可用性與異地備援時遷移</li>
+          </ul>
+        </div>
+        <div style="margin-top: 10px; padding: 12px 16px; background: #f1f5f9; border-radius: 8px; font-size: 16px; color: #334155; font-weight: 800;">
+          💡 <strong>策略重點：</strong>第二階段 100% 預算聚焦感測器研發，避免提前產生雲端固定租金。
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>Steelflex 運動數據收集分析專案</span>
+      <span>10  (Appendix)</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- 控制按鈕：正下方置中對齊 -->
+<div class="nav-controls">
+  <button class="nav-btn" onclick="prevSlide()">◀ 上一頁</button>
+  <button class="nav-btn" onclick="nextSlide()">下一頁 ▶</button>
+</div>
+<script>
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.slide');
+  
+  // 循環播放範圍：索引 0 ~ 7（第 1 頁到第 8 頁）
+  const MIN_SLIDE = 0;
+  const MAX_SLIDE = 6; 
+
+  function showSlide(index) {
+    // 移除當前頁面 active
+    slides[currentSlide].classList.remove('active');
+    
+    // 嚴格邊界邏輯：
+    // 超過第 8 頁（index > 7）或當前在備援頁按下一頁 -> 循環回第 1 頁 (0)
+    // 小於第 1 頁（index < 0） -> 循環到第 8 頁 (7)
+    if (index > MAX_SLIDE || currentSlide > MAX_SLIDE) {
+      currentSlide = MIN_SLIDE;
+    } else if (index < MIN_SLIDE) {
+      currentSlide = MAX_SLIDE;
+    } else {
+      currentSlide = index;
+    }
+    
+    // 顯示目標頁面
+    slides[currentSlide].classList.add('active');
+  }
+
+  function nextSlide() {
+    showSlide(currentSlide + 1);
+  }
+
+  function prevSlide() {
+    showSlide(currentSlide - 1);
+  }
+
+  // 鍵盤左右鍵與空白鍵翻頁
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      nextSlide();
+    } else if (e.key === 'ArrowLeft') {
+      prevSlide();
+    } else if (e.key === '7') { // 快捷鍵：跳至 Slide 9
+      slides[currentSlide].classList.remove('active');
+      currentSlide = 7;
+      slides[currentSlide].classList.add('active');
+    } else if (e.key === '8') { // 快捷鍵：跳至 Slide 9
+      slides[currentSlide].classList.remove('active');
+      currentSlide = 8;
+      slides[currentSlide].classList.add('active');
+    } else if (e.key === '9') { // 快捷鍵：跳至 Slide 10
+      slides[currentSlide].classList.remove('active');
+      currentSlide = 9;
+      slides[currentSlide].classList.add('active');
+    }
+  });
+</script>
+
+</body>
+</html>
